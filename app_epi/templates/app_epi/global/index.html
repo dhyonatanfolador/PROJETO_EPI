@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+<body class="bg-light">
+    
+    {% include "app_epi/partial/header.html" %}
+    {% include "app_epi/partial/home.html" %}
+    {% include "app_epi/partial/about.html" %}
+    
+    {% block scripts %}{% endblock scripts %}
+
+    {% block content %}{% endblock content %}
+
+</body>
+</html>

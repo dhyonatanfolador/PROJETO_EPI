@@ -1,0 +1,17 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'app_epi/css/style.css' %}">
+
+<header>
+    <nav class="navbar">
+        <div class="logo">EPI</div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+        </ul>
+        <button class="login-btn">Entrar</button>
+    </nav>
+    <main>
+        {% block content %}{% endblock content %}
+    </main>
+</header>
