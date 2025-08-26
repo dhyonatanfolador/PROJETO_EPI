@@ -1,7 +1,7 @@
 from django.urls import path
-from app_epi.views import home, about
+from app_epi.views import inicio, sobre
 
 urlpatterns = [
-    path('', home),
-    path('about/', about),
+    path('', inicio),
+    path('sobre/', sobre),
 ]

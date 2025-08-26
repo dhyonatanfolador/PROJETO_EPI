@@ -4,8 +4,8 @@ from django.shortcuts import render
 def index(request):
     return render(request, "app_epi/partial/index.html")
 
-def home(request):
-    return render(request, "app_epi/partial/home.html")
+def inicio(request):
+    return render(request, "app_epi/partial/inicio.html")
 
-def about(request):
-    return render(request, "app_epi/partial/about.html")
+def sobre(request):
+    return render(request, "app_epi/partial/sobre.html")
