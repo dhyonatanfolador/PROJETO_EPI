@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
-from django.views.decorators.csrf import csrf_exempt
-import json
 from django.http import JsonResponse
-
 
 # Create your views here.
 def index(request):
@@ -41,36 +38,43 @@ def Emprestimos(request):
 
 def logins(request):
     error = None
+    email = None
+    password = None
 
     if request.method == "POST":
-        # Detecta se é JSON ou form normal
+        # Requisição JSON (fetch)
         if request.content_type == "application/json":
             try:
+                import json
                 data = json.loads(request.body)
+                email = data.get("email")
+                password = data.get("password")
             except json.JSONDecodeError:
                 return JsonResponse({"status": "error", "message": "JSON inválido"})
-            email = data.get("email")
-            password = data.get("password")
 
-        # Autenticação Django
+        # Requisição de formulário HTML
+        elif request.content_type == "application/x-www-form-urlencoded":
+            email = request.POST.get("email")
+            password = request.POST.get("password")
+
+        # Autenticação
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            if (
-                request.headers.get("x-requested-with") == "XMLHttpRequest"
-                or request.content_type == "application/json"
-            ):
+
+            # Resposta para requisição AJAX ou JSON
+            if request.headers.get("x-requested-with") == "XMLHttpRequest" or request.content_type == "application/json":
                 return JsonResponse({"status": "success", "message": "Login ok"})
+
+            # Redirecionamento padrão
+            return redirect("inicio")
 
         else:
             error = "Usuário ou senha incorretos."
 
-            # Para fetch → JSON
-            if (
-                request.headers.get("x-requested-with") == "XMLHttpRequest"
-                or request.content_type == "application/json"
-            ):
+            # Resposta para requisição AJAX ou JSON
+            if request.headers.get("x-requested-with") == "XMLHttpRequest" or request.content_type == "application/json":
                 return JsonResponse({"status": "error", "message": error})
 
-    # Se GET ou erro → volta pro template de login
+    # GET ou erro → renderiza template
     return render(request, "app_epi/pages/login.html", {"error": error})

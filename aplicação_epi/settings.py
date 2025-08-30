@@ -75,6 +75,8 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",  # mantém padrão
 ]
 
+AUTH_USER_MODEL = 'app_epi.Usuario'
+
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
