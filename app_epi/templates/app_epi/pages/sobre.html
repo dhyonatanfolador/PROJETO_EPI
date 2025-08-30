@@ -1,3 +1,17 @@
-{% load static %}
+{% extends "app_epi/global/index.html" %}
+{% block title %}Sobre{% endblock title %}
 
-{% include 'app_epi/partials/header.html' %}
+{% block header %}
+    {% include 'app_epi/partials/header.html' %}
+{% endblock header %}
+
+{% block content %}
+    <main>
+        <h1>Sobre Nós</h1>
+        <p>Esta é a página sobre o nosso projeto.</p>
+    </main>
+{% endblock content %}
+
+{% block footer %}
+    {% include 'app_epi/partials/footer.html' %}
+{% endblock footer %}

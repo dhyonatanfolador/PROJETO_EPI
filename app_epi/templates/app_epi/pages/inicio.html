@@ -1,3 +1,18 @@
-{% load static %}
+{% extends "app_epi/global/index.html" %}
+{% block title %}Início{% endblock title %}
 
-{% include 'app_epi/partials/header.html' %}
+{% load static %}
+{% block header %}
+    {% include 'app_epi/partials/header.html' %}
+{% endblock header %}
+
+{% block content %}
+    <main>
+        <h1>Bem-vindo ao Nosso Projeto</h1>
+        <p>Esta é a página inicial do nosso projeto.</p>
+    </main>
+{% endblock content %}
+
+{% block footer %}
+    {% include 'app_epi/partials/footer.html' %}
+{% endblock footer %}

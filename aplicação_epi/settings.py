@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from re import A
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -69,6 +70,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "aplicação_epi.wsgi.application"
 
+AUTHENTICATION_BACKENDS = [
+    "app_epi.auth_backends.CustomAuthBackend",  # Adiciona autenticação por email
+    "django.contrib.auth.backends.ModelBackend",  # mantém padrão
+]
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -116,6 +121,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
+
+# Media files settings
+MEDIA_URL = "/media/"
+
+# Media files (Uploaded images)
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
