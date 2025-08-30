@@ -4,6 +4,7 @@ from .colaborador import Colaborador
 from .equipamento import Equipamento
 
 class Emprestimo(models.Model):
+    id = models.AutoField(primary_key=True, editable=False, unique=True)
     colaborador = models.ForeignKey(Colaborador, on_delete=models.CASCADE)
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     equipamento = models.ForeignKey(Equipamento, on_delete=models.CASCADE)

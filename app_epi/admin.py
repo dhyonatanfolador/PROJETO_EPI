@@ -1,11 +1,36 @@
 from django.contrib import admin
-from .models import Usuario
+from .models import Usuario, Colaborador, Equipamento, Emprestimo
 
-
-# Register your models here.
 @admin.register(Usuario)
 class UsuarioAdmin(admin.ModelAdmin):
     list_display = ("id", "nome", "email", "telefone", "status")
     search_fields = ("nome", "email")
     list_filter = ("status",)
     ordering = ("id",)
+
+@admin.register(Colaborador)
+class ColaboradorAdmin(admin.ModelAdmin):  # Corrigido nome da classe
+    list_display = ("id", "nome", "email", "telefone", "cargo")
+    search_fields = ("nome", "email", "cargo")
+    ordering = ("id",)
+
+@admin.register(Equipamento)
+class EquipamentoAdmin(admin.ModelAdmin):  # Corrigido nome da classe
+    list_display = ("id", "ca", "nome", "descricao", "quantidade")
+    search_fields = ("nome", "ca",)
+    ordering = ("id",)
+
+@admin.register(Emprestimo)
+class EmprestimoAdmin(admin.ModelAdmin):  # Corrigido nome da classe
+    list_display = (
+        "id",
+        "colaborador",
+        "usuario",
+        "equipamento",
+        "data_retirada",
+        "data_devolucao",
+        "status",
+    )
+    list_filter = ("status", "data_retirada", "data_devolucao")
+    search_fields = ("colaborador__nome", "usuario__username", "equipamento__nome")
+    ordering = ("-data_retirada",)

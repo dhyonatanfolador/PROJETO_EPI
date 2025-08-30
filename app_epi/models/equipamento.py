@@ -1,6 +1,7 @@
 from django.db import models
 
 class Equipamento(models.Model):
+    id = models.AutoField(primary_key=True, editable=False, unique=True)
     ca = models.CharField(max_length=50, unique=True)
     nome = models.CharField(max_length=100)
     descricao = models.TextField()
