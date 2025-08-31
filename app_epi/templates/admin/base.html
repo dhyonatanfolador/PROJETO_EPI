@@ -10,10 +10,8 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #0F172A;
       color: #f1f1f1;
       margin: 0;
-      padding: 2rem;
     }
 
     .dashboard-container {
@@ -92,57 +90,4 @@
       color: #F87171;
     }
   </style>
-{% endblock %}
-
-{% block content %}
-  <div class="dashboard-container">
-    <div>
-      {% for app in app_list %}
-        <div class="module-card">
-          <h2>{{ app.name }}</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Modelo</th>
-                <th>Adicionar</th>
-                <th>Modificar</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for model in app.models %}
-                <tr>
-                  <td><a href="{{ model.admin_url }}">{{ model.name }}</a></td>
-                  <td>
-                    {% if model.add_url %}
-                      <a href="{{ model.add_url }}">Adicionar</a>
-                    {% else %}
-                      —
-                    {% endif %}
-                  </td>
-                  <td>
-                    {% if model.admin_url %}
-                      <a href="{{ model.admin_url }}">Modificar</a>
-                    {% else %}
-                      —
-                    {% endif %}
-                  </td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      {% endfor %}
-    </div>
-
-    <div class="recent-actions">
-      <h2>Ações recentes</h2>
-      <ul>
-        {% for action in recent_actions %}
-          <li>{{ action }}</li>
-        {% empty %}
-          <li>Nenhuma ação recente.</li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
 {% endblock %}
