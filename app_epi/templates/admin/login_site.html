@@ -1,0 +1,65 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}Area Administrativa{% endblock %}
+
+{# Remove elementos visuais padrão do Django Admin #}
+{% block branding %}<div style="display:none;"></div>{% endblock %}
+{% block nav-global %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block sidebar %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      background-color: #0F172A !important;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    /* Remove título "Acessar" */
+    #content > h1:first-child {
+      display: none !important;
+    }
+
+    /* Remove elementos visuais extras */
+    #header,
+    #toggle-nav-sidebar,
+    #nav-sidebar,
+    #content-search,
+    .module-search,
+    .sticky {
+      display: none !important;
+    }
+
+    /* Layout centralizado sem estreitamento */
+    #container, #main {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #content {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: auto !important;
+      max-width: none !important;
+      flex: none !important;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}{% endblock %}

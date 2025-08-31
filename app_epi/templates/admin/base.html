@@ -1,0 +1,148 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+<link rel="stylesheet" href="/static/admin/css/base.css">
+<link rel="stylesheet" href="/static/admin/css/dashboard.css">
+<link rel="stylesheet" href="/static/admin/css/nav_sidebar.css">
+<link rel="stylesheet" href="/static/admin/css/responsive.css">
+
+{% block extrastyle %}
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0F172A;
+      color: #f1f1f1;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .dashboard-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .module-card {
+      background-color: #1E293B;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .module-card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #60A5FA;
+    }
+
+    .module-card table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .module-card th,
+    .module-card td {
+      padding: 0.6rem;
+      text-align: left;
+      border-bottom: 1px solid #334155;
+    }
+
+    .module-card a {
+      color: #f1f1f1;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .module-card a:hover {
+      color: #60A5FA;
+    }
+
+    .recent-actions {
+      background-color: #1E293B;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .recent-actions h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #F87171;
+    }
+
+    .recent-actions ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .recent-actions li {
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .recent-actions a {
+      color: #f1f1f1;
+      text-decoration: none;
+    }
+
+    .recent-actions a:hover {
+      color: #F87171;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="dashboard-container">
+    <div>
+      {% for app in app_list %}
+        <div class="module-card">
+          <h2>{{ app.name }}</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Modelo</th>
+                <th>Adicionar</th>
+                <th>Modificar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for model in app.models %}
+                <tr>
+                  <td><a href="{{ model.admin_url }}">{{ model.name }}</a></td>
+                  <td>
+                    {% if model.add_url %}
+                      <a href="{{ model.add_url }}">Adicionar</a>
+                    {% else %}
+                      —
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if model.admin_url %}
+                      <a href="{{ model.admin_url }}">Modificar</a>
+                    {% else %}
+                      —
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="recent-actions">
+      <h2>Ações recentes</h2>
+      <ul>
+        {% for action in recent_actions %}
+          <li>{{ action }}</li>
+        {% empty %}
+          <li>Nenhuma ação recente.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}

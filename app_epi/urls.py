@@ -1,14 +1,5 @@
 from django.urls import path
-from app_epi.views import (
-    logina,
-    inicio,
-    sobre,
-    Colaboradores,
-    Equipamentos,
-    Usuarios,
-    Emprestimos,
-    logins,
-)
+from app_epi.views import (logina, inicio, sobre, Colaboradores, Equipamentos, Usuarios, Emprestimos, logins,)
 
 urlpatterns = [
     path("", logina),

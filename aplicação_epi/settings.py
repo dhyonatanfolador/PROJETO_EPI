@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "app_epi",  # Your application
+    "widget_tweaks",
+
 ]
 
 MIDDLEWARE = [
@@ -55,8 +57,8 @@ ROOT_URLCONF = "aplicação_epi.urls"
 
 TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'app_epi' / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -134,3 +136,9 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Após login bem-sucedido, direciona ao índice do Admin
+LOGIN_REDIRECT_URL = '/admin/'
+
+# (Opcional) após logout, envia de volta à tela de login ou à home
+LOGOUT_REDIRECT_URL = '/admin/login/'
