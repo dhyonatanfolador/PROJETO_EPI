@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     #Apps do projeto
-    "app_epi",
+    "app_emprestimo",
     "app_account",
     "app_relatorio",
     "app_colaborador",

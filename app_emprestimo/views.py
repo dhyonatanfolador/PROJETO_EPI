@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from rest_framework import generics
 from .models import Emprestimo
 from .serializers import EmprestimoSerializer
@@ -19,3 +20,7 @@ class EmprestimoDeleteView(generics.DestroyAPIView):
     queryset = Emprestimo.objects.all()
     serializer_class = EmprestimoSerializer
     lookup_field = 'id'
+
+def Emprestimo(request):
+    return render(request, "app_emprestimo/pages/emprestimo.html") 
+

@@ -1,7 +1,7 @@
 {% extends "global/index.html" %}
 {% block title %}Login{% endblock title %}
-
-{% block content %}
+{% load static %}
+{% block login %}
     <style>
         * {
             margin: 0;
@@ -258,6 +258,7 @@
             <span>&lt;/&gt;</span>
         </a>
     </div>
+    <script src="{% static 'global/js/index.js' %}" defer></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const toggleBtn = document.getElementById("passwordToggle");
@@ -269,4 +270,4 @@
             });
         });
     </script>
-{% endblock content %}
+{% endblock login %}

@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class AppEpiConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'app_epi'
+    name = 'app_emprestimo'

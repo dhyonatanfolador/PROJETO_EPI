@@ -4,9 +4,11 @@ from .views import (
     EmprestimoCreateView,
     EmprestimoUpdateView,
     EmprestimoDeleteView,
+    Emprestimo
 )
 
 urlpatterns = [
+    path('emprestimo/', Emprestimo, name='emprestimo'),
     path('emprestimos/', EmprestimoListView.as_view(), name='emprestimo-list'),
     path('emprestimos/create/', EmprestimoCreateView.as_view(), name='emprestimo-create'),
     path('emprestimos/<int:id>/update/', EmprestimoUpdateView.as_view(), name='emprestimo-update'),

@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from rest_framework import generics
 from .models import Equipamento
 from .serializers import EquipamentoSerializer
@@ -19,3 +20,7 @@ class EquipamentoDeleteView(generics.DestroyAPIView):
     queryset = Equipamento.objects.all()
     serializer_class = EquipamentoSerializer
     lookup_field = 'id'
+
+def Equipamento(request):
+    return render(request, "app_equipamento/pages/equipamento.html") 
+

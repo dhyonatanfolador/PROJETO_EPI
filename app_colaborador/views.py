@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from rest_framework import generics
 from .models import Colaborador
 from .serializers import ColaboradorSerializer
@@ -23,3 +24,6 @@ class ColaboradorDeleteView(generics.DestroyAPIView):
     queryset = Colaborador.objects.all()
     serializer_class = ColaboradorSerializer
     lookup_field = 'id'
+
+def Colaborador(request):
+    return render(request, "app_colaborador/pages/colaborador.html") 
