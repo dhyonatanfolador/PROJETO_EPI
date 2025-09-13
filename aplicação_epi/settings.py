@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from django.contrib.messages import constants as messages
 from re import A
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -150,3 +151,11 @@ LOGIN_REDIRECT_URL = '/admin/'
 
 # (Opcional) após logout, envia de volta à tela de login ou à home
 LOGOUT_REDIRECT_URL = '/admin/login/'
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'secondary',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}

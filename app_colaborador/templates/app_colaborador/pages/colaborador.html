@@ -1,0 +1,133 @@
+{% extends "global/index.html" %}
+{% load static %}
+
+{% block title %}EPI{% endblock title %}
+
+{% block header %}
+    {% include 'global/partials/header.html' %}
+{% endblock header %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h1 class="display-4 text-primary mb-4">Lista de Colaboradores</h1>
+
+    <!-- Card: Lista de Colaboradores -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <h2 class="h5 mb-0">
+                <i class="fas fa-users me-2"></i> Colaboradores Registrados
+            </h2>
+            <a href="{% url 'colaborador-create' %}" class="btn btn-success btn-sm">
+                + Novo Colaborador
+            </a>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover mb-0 align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Cargo</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th class="text-end">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for colaborador in colaboradores %}
+                            <tr>
+                                <td>{{ colaborador.id }}</td>
+                                <td>{{ colaborador.nome }}</td>
+                                <td>{{ colaborador.cargo }}</td>
+                                <td>{{ colaborador.email }}</td>
+                                <td>
+                                    {% if colaborador.telefone %}
+                                        {{ colaborador.telefone }}
+                                    {% else %}
+                                        <span class="badge bg-secondary">Vazio</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    <a href="{% url 'colaborador-update' colaborador.id %}" class="btn btn-sm btn-warning me-1">
+                                        Editar
+                                    </a>
+                                    <a href="{% url 'colaborador-delete' colaborador.id %}" class="btn btn-sm btn-danger">
+                                        Deletar
+                                    </a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    Nenhum colaborador encontrado.
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Paginação -->
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">&laquo; Primeiro</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">&laquo; Primeiro</span></li>
+                <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+            {% endif %}
+
+            <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Próxima</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Próxima</span></li>
+                <li class="page-item disabled"><span class="page-link">Última &raquo;</span></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <!-- Mensagens -->
+    {% if messages %}
+        <div class="container mt-3" style="position: fixed; top: 70px; right: 20px; z-index: 1050;">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const alerts = document.querySelectorAll('.alert');
+                alerts.forEach(function (alert) {
+                    setTimeout(function () {
+                        alert.classList.remove('show');
+                        alert.classList.add('hide');
+                        setTimeout(function () {
+                            alert.remove();
+                        }, 500);
+                    }, 3000); // Altere o tempo conforme necessário (ms)
+                });
+            });
+        </script>
+    {% endif %}
+</div>
+{% endblock content %}

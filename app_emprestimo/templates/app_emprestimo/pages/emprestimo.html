@@ -1,13 +1,192 @@
-{% extends "global/index.html" %}
-{% block title %}EPI{% endblock title %}
+{% extends "global/index.html" %} 
+{% load static %} 
+{% block title %}Controle de EPI{% endblock title %} 
 
-{% load static %}
-{% block header %}
-    {% include 'global/partials/header.html' %}
-{% endblock header %}
+{% block header %} 
+  {% include 'global/partials/header.html' %} 
+{% endblock header %} 
 
-{% block content %}{% endblock content %}
+{% block content %}
+<div class="container mt-4">
+  <h1 class="display-4 text-primary mb-4">Controle de EPI</h1>
 
-{% block footer %}
-    {% include 'global/partials/footer.html' %}
-{% endblock footer %}
+  <!-- Card: Novo Empréstimo -->
+  <div class="card mb-5 shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h2 class="h5 mb-0">
+        <i class="fas fa-plus-circle me-2"></i> Novo Empréstimo
+      </h2>
+    </div>
+    <div class="card-body">
+      <form method="post" class="row g-4">
+        {% csrf_token %}
+
+        <!-- Colaborador -->
+        <div class="col-md-6">
+          <label for="id_id_colaborador" class="form-label text-secondary"
+            >Colaborador</label
+          >
+          <select
+            id="id_id_colaborador"
+            name="id_colaborador"
+            class="form-select border-0 border-bottom rounded-0 py-2"
+          >
+            <option value="" selected>Selecione…</option>
+            <option value="1">teste</option>
+          </select>
+        </div>
+
+        <!-- Equipamento -->
+        <div class="col-md-6">
+          <label for="id_id_equipamento" class="form-label text-secondary"
+            >Equipamento</label
+          >
+          <select
+            id="id_equipamento"
+            name="id_equipamento"
+            class="form-select border-0 border-bottom rounded-0 py-2"
+          >
+            <option value="" selected>Selecione…</option>
+          </select>
+        </div>
+
+        <!-- Data de Entrega -->
+        <div class="col-md-4">
+          <label for="id_data_entrega" class="form-label text-secondary"
+            >Data de Entrega</label
+          >
+          <input
+            type="date"
+            id="id_data_entrega"
+            name="data_entrega"
+            class="form-control border-0 border-bottom rounded-0 py-2"
+            value="{{ now|date:'Y-m-d' }}"
+          />
+        </div>
+
+        <!-- Data Prevista de Devolução -->
+        <div class="col-md-4">
+          <label for="id_data_devolucao" class="form-label text-secondary"
+            >Prevista Devolução</label
+          >
+          <input
+            type="date"
+            id="id_data_devolucao"
+            name="data_devolucao"
+            class="form-control border-0 border-bottom rounded-0 py-2"
+          />
+        </div>
+
+        <!-- Data Efetiva de Devolução -->
+        <div class="col-md-4">
+          <label for="id_devolucao" class="form-label text-secondary"
+            >Efetiva Devolução</label
+          >
+          <input
+            type="date"
+            id="id_devolucao"
+            name="devolucao"
+            class="form-control border-0 border-bottom rounded-0 py-2"
+          />
+        </div>
+
+        <!-- Status -->
+        <div class="col-md-6">
+          <label for="id_status" class="form-label text-secondary"
+            >Status</label
+          >
+          <select
+            id="id_status"
+            name="status"
+            class="form-select border-0 border-bottom rounded-0 py-2"
+          >
+            <option value="emprestado">Emprestado</option>
+            <option value="em_uso">Em Uso</option>
+            <option value="fornecido" selected>Fornecido</option>
+            <option value="devolvido">Devolvido</option>
+            <option value="danificado">Danificado</option>
+            <option value="perdido">Perdido</option>
+          </select>
+        </div>
+
+        <!-- Botão Salvar -->
+        <div class="col-12 text-end">
+          <button type="submit" class="btn btn-primary px-4">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lista de Empréstimos -->
+  <div class="card shadow-sm">
+    <div class="card-header bg-secondary text-white">
+      <h2 class="h5 mb-0">
+        <i class="fas fa-list me-2"></i> Empréstimos Registrados
+      </h2>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>Colaborador</th>
+              <th>Equipamento</th>
+              <th>Entregue em</th>
+              <th>Prevista Devolução</th>
+              <th>Efetiva Devolução</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for emp in emprestimos %}
+            <tr>
+              <td>{{ emp.pk }}</td>
+              <td>{{ emp.id_colaborador.nome }}</td>
+              <td>{{ emp.id_equipamento.descricao }}</td>
+              <td>{{ emp.data_entrega|date:"d/m/Y H:i" }}</td>
+              <td>{{ emp.data_devolucao|date:"d/m/Y H:i" }}</td>
+              <td>
+                {% if emp.devolucao %} {{ emp.devolucao|date:"d/m/Y H:i" }} {%
+                else %} – {% endif %}
+              </td>
+              <td>
+                {% if emp.status == 'emprestado' %}
+                <span class="badge bg-warning text-dark"
+                  >{{ emp.get_status_display }}</span
+                >
+                {% elif emp.status == 'em_uso' %}
+                <span class="badge bg-info text-white"
+                  >{{ emp.get_status_display }}</span
+                >
+                {% elif emp.status == 'fornecido' %}
+                <span class="badge bg-success"
+                  >{{ emp.get_status_display }}</span
+                >
+                {% elif emp.status == 'devolvido' %}
+                <span class="badge bg-primary"
+                  >{{ emp.get_status_display }}</span
+                >
+                {% elif emp.status == 'danificado' %}
+                <span class="badge bg-danger"
+                  >{{ emp.get_status_display }}</span
+                >
+                {% elif emp.status == 'perdido' %}
+                <span class="badge bg-dark">{{ emp.get_status_display }}</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="7" class="text-center text-muted py-4">
+                Nenhum empréstimo encontrado.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
