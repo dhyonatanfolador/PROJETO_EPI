@@ -1,10 +1,14 @@
 from django.urls import path
-from app_epi.views import (inicio, sobre)
-from app_account.views import logina, logins
+from .views import (
+    EmprestimoListView,
+    EmprestimoCreateView,
+    EmprestimoUpdateView,
+    EmprestimoDeleteView,
+)
 
 urlpatterns = [
-    path("", logina),
-    path("inicio/", inicio),
-    path("sobre/", sobre),
-    path("logins/", logins),
+    path('emprestimos/', EmprestimoListView.as_view(), name='emprestimo-list'),
+    path('emprestimos/create/', EmprestimoCreateView.as_view(), name='emprestimo-create'),
+    path('emprestimos/<int:id>/update/', EmprestimoUpdateView.as_view(), name='emprestimo-update'),
+    path('emprestimos/<int:id>/delete/', EmprestimoDeleteView.as_view(), name='emprestimo-delete'),
 ]

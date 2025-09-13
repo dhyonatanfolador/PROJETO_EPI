@@ -1,14 +1,21 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from rest_framework import generics
+from .models import Emprestimo
+from .serializers import EmprestimoSerializer
 
-# Create your views here.
-def index(request):
-    return render(request, "app_epi/global/index.html")
+class EmprestimoListView(generics.ListAPIView):
+    queryset = Emprestimo.objects.all()
+    serializer_class = EmprestimoSerializer
 
+class EmprestimoCreateView(generics.CreateAPIView):
+    queryset = Emprestimo.objects.all()
+    serializer_class = EmprestimoSerializer
 
-def inicio(request):
-    return render(request, "app_epi/pages/inicio.html")
+class EmprestimoUpdateView(generics.UpdateAPIView):
+    queryset = Emprestimo.objects.all()
+    serializer_class = EmprestimoSerializer
+    lookup_field = 'id'
 
-
-def sobre(request):
-    return render(request, "app_epi/pages/sobre.html")
+class EmprestimoDeleteView(generics.DestroyAPIView):
+    queryset = Emprestimo.objects.all()
+    serializer_class = EmprestimoSerializer
+    lookup_field = 'id'

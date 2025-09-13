@@ -18,7 +18,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     const result = JSON.parse(text);
 
     if (result.status == 'success') {
-        window.location.href = '/inicio'; // Redireciona para página protegida
+        window.location.href = '/home'; // Redireciona para página protegida
     } else {
         notificacao(result.status, result.message);
     }

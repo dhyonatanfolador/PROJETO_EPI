@@ -38,7 +38,7 @@ def logins(request):
                 return JsonResponse({"status": "success", "message": "Login ok"})
 
             # Redirecionamento padrão
-            return redirect("inicio")
+            return redirect("home")
 
         else:
             error = "Usuário ou senha incorretos."

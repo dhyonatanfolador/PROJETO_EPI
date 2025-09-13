@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
-from .colaborador import Colaborador
-from .equipamento import Equipamento
+from app_equipamento.models import Equipamento  # type: ignore
+from app_colaborador.models import Colaborador  # type: ignore
 
 class Emprestimo(models.Model):
     id = models.AutoField(primary_key=True, editable=False, unique=True)

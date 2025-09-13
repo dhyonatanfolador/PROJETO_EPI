@@ -1,0 +1,1 @@
+from . equipamento import Equipamento

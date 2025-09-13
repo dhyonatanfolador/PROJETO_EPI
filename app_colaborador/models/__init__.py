@@ -1,0 +1,1 @@
+from . colaborador import Colaborador
