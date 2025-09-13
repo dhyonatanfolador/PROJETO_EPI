@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "app_epi",  # Your application
-    "widget_tweaks",
+
+    #Apps do projeto
+    "app_epi",
+    "app_account",
 
 ]
 
@@ -58,7 +60,7 @@ ROOT_URLCONF = "aplicação_epi.urls"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'app_epi' / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],  # Diretório global de templates
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -73,11 +75,11 @@ TEMPLATES = [
 WSGI_APPLICATION = "aplicação_epi.wsgi.application"
 
 AUTHENTICATION_BACKENDS = [
-    "app_epi.auth_backends.CustomAuthBackend",  # Adiciona autenticação por email
+    "app_account.auth_backends.CustomAuthBackend",  # Adiciona autenticação por email
     "django.contrib.auth.backends.ModelBackend",  # mantém padrão
 ]
 
-AUTH_USER_MODEL = 'app_epi.Usuario'
+AUTH_USER_MODEL = 'app_account.Usuario'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -125,6 +127,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
+
+STATICFILES_DIRS = [BASE_DIR / "static"] # Diretório global de arquivos estáticos
 
 # Media files settings
 MEDIA_URL = "/media/"
