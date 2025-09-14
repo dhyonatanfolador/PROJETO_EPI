@@ -78,6 +78,7 @@
             transition: border-color 0.2s ease;
         }
 
+
         .input-group input:focus {
             border-color: #4F46E5;
             outline: none;
@@ -88,17 +89,17 @@
             position: absolute;
             margin-left: 20px;
             top: 50%;
-            left: 1rem;
+            left: 2.5rem;
             transform: translateY(-50%);
             font-size: 0.85rem;
-            color: #6B7280;
+            color: #94A3B8;
             pointer-events: none;
             transition: all 0.2s ease;
+            background-color: transparent;
         }
 
         .input-group input:focus + label,
         .input-group input:not(:placeholder-shown) + label {
-            margin-left: 0px;
             top: -0.6rem;
             left: 0.75rem;
             font-size: 0.75rem;
@@ -109,9 +110,10 @@
 
         .input-icon {
             position: absolute;
-            top: 50%;
             left: 0.75rem;
-            transform: translateY(-50%);
+            height: 100%;
+            display: flex;
+            align-items: center; /* centraliza verticalmente */
             pointer-events: none;
         }
 

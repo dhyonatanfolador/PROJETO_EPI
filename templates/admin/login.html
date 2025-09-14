@@ -10,6 +10,7 @@
       box-sizing: border-box;
       font-family: 'Inter', sans-serif;
     }
+
     .login-container {
       display: flex;
       justify-content: center;
@@ -18,6 +19,7 @@
       background-color: #0F172A;
       padding: 2rem;
     }
+
     .login-card {
       background-color: #1E293B;
       border-radius: 16px;
@@ -26,42 +28,50 @@
       max-width: 400px;
       padding: 2.5rem;
     }
+
     .login-header {
       text-align: center;
       margin-bottom: 2rem;
     }
+
     .login-header h2 {
       font-size: 1.75rem;
       font-weight: 600;
       color: #F1F5F9;
     }
+
     .login-header p {
       font-size: 0.95rem;
       color: #94A3B8;
       margin-top: 0.5rem;
     }
+
     .neu-icon {
       display: flex;
       justify-content: center;
       align-items: center;
       margin-bottom: 1rem;
     }
+
     .icon-inner svg {
       width: 40px;
       height: 40px;
       stroke: #6366F1;
     }
+
     .login-form {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
     }
+
     .input-group {
       position: relative;
     }
+
     .input-group input {
       width: 100%;
-      padding: 1rem 1rem 1rem 3rem;
+      padding: 1rem 1rem 1rem 2.75rem; /* espaço para ícone */
       border: 1px solid #475569;
       border-radius: 8px;
       font-size: 1rem;
@@ -69,22 +79,27 @@
       color: #F1F5F9;
       transition: border-color 0.2s ease;
     }
+
     .input-group input:focus {
       border-color: #6366F1;
       outline: none;
       background-color: #1E293B;
     }
+
+    /* Label base */
     label {
-        position: absolute;
-        margin-left: 20px;
-        top: 50%;
-        left: 1rem;
-        transform: translateY(-50%);
-        font-size: 0.85rem;
-        color: #94A3B8;
-        pointer-events: none;
-        transition: all 0.2s ease;
+      position: absolute;
+      top: 50%;
+      left: 2.5rem;
+      transform: translateY(-50%);
+      font-size: 0.85rem;
+      color: #94A3B8;
+      pointer-events: none;
+      transition: all 0.2s ease;
+      background-color: transparent;
     }
+
+    /* Label flutuante */
     .input-group input:focus + label,
     .input-group input:not(:placeholder-shown) + label {
       top: -0.6rem;
@@ -94,18 +109,25 @@
       padding: 0 0.25rem;
       color: #6366F1;
     }
+
+    /* Ícone */
     .input-icon {
       position: absolute;
-      top: 50%;
+      top: 0;
       left: 0.75rem;
-      transform: translateY(-50%);
+      height: 100%;
+      display: flex;
+      align-items: center;
       pointer-events: none;
     }
+
     .input-icon svg {
       width: 20px;
       height: 20px;
       stroke: #94A3B8;
     }
+
+    /* Botão de mostrar senha */
     .password-toggle {
       background: none;
       border: none;
@@ -114,28 +136,30 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #4B5563;
       position: absolute;
       top: 50%;
       right: 0.75rem;
       transform: translateY(-50%);
     }
+
     .password-toggle svg {
       width: 20px;
       height: 20px;
       transition: opacity 0.2s ease;
       stroke: #94A3B8;
     }
+
     .password-toggle .eye-open { display: block; }
     .password-toggle .eye-closed { display: none; }
     .password-toggle.showing .eye-open { display: none; }
     .password-toggle.showing .eye-closed { display: block; }
 
     .error-message {
-        font-size: 0.75rem;
-        color: #DC2626;
-        margin-top: 0.25rem;
+      font-size: 0.75rem;
+      color: #DC2626;
+      margin-top: 0.25rem;
     }
+
     .login-btn {
       display: flex;
       justify-content: center;
@@ -150,6 +174,7 @@
       cursor: pointer;
       transition: background-color 0.2s ease;
     }
+
     .login-btn:hover { background-color: #4F46E5; }
 
     .normal-icon {
@@ -167,10 +192,12 @@
       transition: opacity 0.3s ease, background-color 0.3s ease;
       z-index: 1000;
     }
+
     .normal-icon:hover {
       opacity: 1;
       background-color: #334155;
     }
+
   </style>
 {% endblock %}
 
@@ -210,7 +237,7 @@
 
         <div class="input-group">
         <input type="text" name="username" id="id_username" placeholder=" ">
-        <label for="id_username">Usuário</label>
+        <label for="id_username">Usuario</label>
           <div class="input-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>

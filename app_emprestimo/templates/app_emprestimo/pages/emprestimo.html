@@ -9,88 +9,20 @@
 
 {% block content %}
 <div class="container mt-4">
-  <h1 class="display-4 text-primary mb-4">Controle de Empréstimos</h1>
-
-  <!-- Card: Novo Empréstimo -->
-  <div class="card mb-5 shadow-sm">
-    <div class="card-header bg-primary text-white">
-      <h2 class="h5 mb-0">
-        <i class="fas fa-plus-circle me-2"></i> Novo Empréstimo
-      </h2>
-    </div>
-    <div class="card-body">
-      <form method="post" class="row g-4">
-        {% csrf_token %}
-
-        <!-- Colaborador -->
-        <div class="col-md-6">
-          <label for="id_id_colaborador" class="form-label text-secondary">Colaborador</label>
-          <select id="id_id_colaborador" name="id_colaborador" class="form-select">
-            <option value="" selected>Selecione…</option>
-            {% for col in colaboradores %}
-              <option value="{{ col.id }}">{{ col.nome }}</option>
-            {% endfor %}
-          </select>
-        </div>
-
-        <!-- Equipamento -->
-        <div class="col-md-6">
-          <label for="id_equipamento" class="form-label text-secondary">Equipamento</label>
-          <select id="id_equipamento" name="id_equipamento" class="form-select">
-            <option value="" selected>Selecione…</option>
-            {% for eq in equipamentos %}
-              <option value="{{ eq.id }}">{{ eq.descricao }}</option>
-            {% endfor %}
-          </select>
-        </div>
-
-        <!-- Data de Entrega -->
-        <div class="col-md-4">
-          <label for="id_data_entrega" class="form-label text-secondary">Data de Entrega</label>
-          <input type="date" id="id_data_entrega" name="data_entrega"
-                 class="form-control" value="{{ now|date:'Y-m-d' }}">
-        </div>
-
-        <!-- Data Prevista de Devolução -->
-        <div class="col-md-4">
-          <label for="id_data_devolucao" class="form-label text-secondary">Prevista Devolução</label>
-          <input type="date" id="id_data_devolucao" name="data_devolucao" class="form-control">
-        </div>
-
-        <!-- Data Efetiva de Devolução -->
-        <div class="col-md-4">
-          <label for="id_devolucao" class="form-label text-secondary">Efetiva Devolução</label>
-          <input type="date" id="id_devolucao" name="devolucao" class="form-control">
-        </div>
-
-        <!-- Status -->
-        <div class="col-md-6">
-          <label for="id_status" class="form-label text-secondary">Status</label>
-          <select id="id_status" name="status" class="form-select">
-            <option value="emprestado">Emprestado</option>
-            <option value="em_uso">Em Uso</option>
-            <option value="fornecido" selected>Fornecido</option>
-            <option value="devolvido">Devolvido</option>
-            <option value="danificado">Danificado</option>
-            <option value="perdido">Perdido</option>
-          </select>
-        </div>
-
-        <!-- Botão Salvar -->
-        <div class="col-12 text-end">
-          <button type="submit" class="btn btn-primary px-4">Salvar</button>
-        </div>
-      </form>
-    </div>
-  </div>
+  <h1 class="display-4 text-primary mb-4">Controle de Emprestimos</h1>
 
   <!-- Lista de Empréstimos -->
   <div class="card shadow-sm">
-    <div class="card-header bg-secondary text-white">
+    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
       <h2 class="h5 mb-0">
-        <i class="fas fa-list me-2"></i> Empréstimos Registrados
+        <i class="fas fa-list me-2"></i> Emprestimos Registrados
       </h2>
+      <a href="{% url 'emprestimo-create' %}" class="btn btn-success btn-sm">
+          + Novo Registro
+      </a>
     </div>
+    {% csrf_token %}
+
     <div class="card-body p-0">
       <div class="table-responsive">
         <table class="table table-striped table-hover mb-0 align-middle">
