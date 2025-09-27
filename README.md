@@ -11,6 +11,7 @@ O **Projeto EPI** é um sistema de controle e emprestimo de EPIs que permite:
 - Gerenciar equipamentos , colaboradores e emprestimos.
 - Validação no login.
 - Gerar relatório em PDF.
+- Não há validação de sessão, por ser um projeto de curto prazo.
 
 ---
 
