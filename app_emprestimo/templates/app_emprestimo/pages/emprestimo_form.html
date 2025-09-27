@@ -12,37 +12,46 @@
 
     <!-- Título dinâmico -->
     <h1 class="display-5 text-primary mb-4">
-        {{ form.instance.pk|yesno:"Editar Emprestimo,Registrar Emprestimo" }}
+        {{ form.instance.pk|yesno:"Editar Empréstimo,Registrar Empréstimo" }}
     </h1>
 
     <!-- Card do formulário -->
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
             <h2 class="h5 mb-0">
-                <i class="fas fa-user me-2"></i> {{ form.instance.pk|yesno:"Editar informações,Registrar novo emprestimo" }}
+                <i class="fas fa-user me-2"></i> {{ form.instance.pk|yesno:"Editar informações,Registrar novo empréstimo" }}
             </h2>
         </div>
 
         <div class="card-body">
             <form method="post" novalidate>
                 {% csrf_token %}
-
                 {{ form.non_field_errors }}
 
                 {% for field in form %}
-    <div class="mb-3">
-        <label for="{{ field.id_for_label }}" class="form-label text-secondary">
-            {{ field.label }}
-        </label>
-        {{ field }}
-
-        {% if field.errors %}
-            <div class="text-danger small mt-1">
-                {{ field.errors|striptags }}
-            </div>
-        {% endif %}
-    </div>
-{% endfor %}
+                    {% if field.name == 'data_devolucao' %}
+                        <div class="mb-3" id="field-data-devolucao">
+                            <label for="{{ field.id_for_label }}" class="form-label text-secondary">
+                                {{ field.label }}
+                            </label>
+                            {{ field }}
+                        </div>
+                    {% elif field.name == 'devolucao' %}
+                        <div class="mb-3" id="field-devolucao">
+                            <label for="{{ field.id_for_label }}" class="form-label text-secondary">
+                                {{ field.label }}
+                            </label>
+                            {{ field }}
+                        </div>
+                    {% else %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label text-secondary">
+                                {{ field.label }}
+                            </label>
+                            {{ field }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
 
                 <div class="text-end mt-4">
                     <button type="submit" class="btn btn-primary px-4 me-2">Salvar</button>
@@ -52,9 +61,9 @@
         </div>
     </div>
 
-    <!-- Mensagens -->
+    <!-- Mensagens do sistema -->
     {% if messages %}
-        <div class="container mt-3" style="position: fixed; top: 70px; right: 20px; z-index: 1050;">
+        <div class="container mt-3 position-fixed top-0 end-0 p-3" style="z-index: 1050;">
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
                     {{ message }}
@@ -73,11 +82,40 @@
                         setTimeout(function () {
                             alert.remove();
                         }, 500);
-                    }, 3000); // Tempo de exibição em ms
+                    }, 3000);
                 });
             });
         </script>
     {% endif %}
 
+    <!-- Script para exibir/ocultar campos conforme o status -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const statusField = document.querySelector('[name="status"]');
+            const dataDevolucaoField = document.getElementById('field-data-devolucao');
+            const devolucaoField = document.getElementById('field-devolucao');
+
+            function updateFieldVisibility() {
+                const status = statusField.value;
+
+                // Mostrar data_devolucao se status for emprestado ou em_uso
+                if (status === 'emprestado' || status === 'em_uso') {
+                    dataDevolucaoField.style.display = 'block';
+                } else {
+                    dataDevolucaoField.style.display = 'none';
+                }
+
+                // Mostrar devolucao se status for devolvido ou danificado
+                if (status === 'devolvido' || status === 'danificado') {
+                    devolucaoField.style.display = 'block';
+                } else {
+                    devolucaoField.style.display = 'none';
+                }
+            }
+
+            updateFieldVisibility();
+            statusField.addEventListener('change', updateFieldVisibility);
+        });
+    </script>
 </div>
 {% endblock content %}
