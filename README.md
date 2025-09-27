@@ -67,3 +67,42 @@ graph TD;
     Colaborador --> Deletar;
     Deletar --> Fim;
 ```
+
+Diagrama de equipamentos:
+
+```mermaid
+graph TD;
+    Menu--> Equipamento;
+    Equipamento --> Criar;
+    Criar --> Salvar;
+    Salvar --> Fim;
+    Equipamento --> Editar;
+    Editar --> Salvar;
+    Salvar --> Fim;
+    Equipamento --> Deletar;
+    Deletar --> Fim;
+```
+
+Diagrama de emprestimo:
+
+```mermaid
+graph TD;
+    Menu--> Emprestimo;
+    Emprestimo --> Criar;
+    Criar --> Salvar;
+    Salvar --> Fim;
+    Emprestimo --> Editar;
+    Editar --> Salvar;
+    Salvar --> Fim;
+```
+
+Diagrama de relatório:
+
+```mermaid
+graph TD;
+    Menu--> Relatório;
+    Relatório --> Filtrar;
+    Filtrar --> Fim;
+    Filtrar --> Imprimir;
+    Imprimir --> Fim;
+```
