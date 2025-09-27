@@ -26,7 +26,7 @@ O **Projeto EPI** é um sistema de controle e emprestimo de EPIs que permite:
 
 ## 📦 Instalação
 
-### 1. Baixe o repositorio em sua maquina local
+### 1. Baixe o repositorio em sua maquina local com git clone.
 
 ### 2. Acesse o usuário root do Debian/Ubuntu no terminal
 
