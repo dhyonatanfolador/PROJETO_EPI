@@ -1,90 +1,97 @@
-1. Documentação Técnica e Apresentação do Sistema de Gerenciamento de EPIs
-Abaixo está o texto em Markdown para o seu trabalho de curso, abrangendo a apresentação, os casos de uso, requisitos e o guia de instalação.
-
-Título do Trabalho: Sistema de Gerenciamento de EPIs (SGEPI)
-Introdução e Contextualização do Projeto
+# Sistema de Gerenciamento de EPIs (SGEPI)
+## Introdução e Contextualização do Projeto
 Este projeto consiste no desenvolvimento do Sistema de Gerenciamento de Equipamentos de Proteção Individual (SGEPI), uma solução digital proposta para a construtora [Nome da Construtora/Região]. O objetivo primário é mitigar a alta taxa de não utilização de EPIs por esquecimento ou falha na retirada, conforme identificado na auditoria interna.
 
 O SGEPI visa digitalizar e controlar o ciclo de vida dos EPIs, desde o cadastro e fornecimento até a devolução, dano ou extravio, garantindo o cumprimento das normas de segurança e promovendo um ambiente de trabalho mais seguro.
 
-Casos de Uso do Sistema (SGEPI)
-ID	Caso de Uso	Ator Principal	Descrição
-CU01	Cadastrar Colaborador	Técnico de Segurança	Inclui novos funcionários no sistema, registrando informações básicas e sua foto.
-CU02	Gerenciar Colaborador	Técnico de Segurança	Permite a edição das informações ou a exclusão de um colaborador (com confirmação).
-CU03	Cadastrar Equipamento	Técnico de Segurança	Registra novos tipos de EPIs (ex: Capacete, Luva de Raspa) no inventário.
-CU04	Gerenciar Equipamento	Técnico de Segurança	Permite a edição das informações ou a exclusão de um EPI do inventário.
-CU05	Realizar Controle de EPI	Técnico de Segurança	Registra a entrega de um EPI a um colaborador, definindo a data de empréstimo/fornecimento e a previsão de devolução.
-CU06	Atualizar Status de EPI	Técnico de Segurança	Atualiza o status de um item emprestado para Devolvido, Danificado ou Perdido, registrando a data e observações.
-CU07	Gerar Relatórios	Técnico de Segurança	Filtra e visualiza o histórico de empréstimos/fornecimentos por colaborador, equipamento e status.
+## Casos de Uso do Sistema (SGEPI)
 
-Exportar para as Planilhas
-Requisitos do Sistema
-Requisitos Funcionais (RF)
-ID	Requisito Funcional	Descrição
-RF01	Gestão de Colaboradores	O sistema deve permitir o CRUD (Criação, Leitura, Atualização e Exclusão) de colaboradores.
-RF02	Gestão de EPIs	O sistema deve permitir o CRUD (Criação, Leitura, Atualização e Exclusão) de equipamentos de proteção individual.
-RF03	Controle de Empréstimo	O sistema deve registrar a entrega de EPIs com data de empréstimo, previsão de devolução, status e chaves estrangeiras para Colaborador e Equipamento.
-RF04	Restrições de Status	O sistema deve exibir apenas os status Emprestado e Fornecido no cadastro, e todos os status (Devolvido, Danificado, Perdido) na edição.
-RF05	Campos Condicionais	Os campos "Data da devolução" e "Observação na devolução" devem aparecer apenas na edição, ao selecionar os status Dev./Dan./Per.
-RF06	Relatórios Detalhados	O sistema deve gerar relatórios com filtros (tipo AND) por nome do colaborador, nome do equipamento e status.
-RF07	Restrição na Edição	Na atualização de status, os campos Colaborador, Equipamento, Data do Empréstimo e Data Prevista da Devolução devem ser desabilitados (disabled).
-RF08	Feedback ao Usuário	O sistema deve exibir mensagens de sucesso ou falha (utilizando Bootstrap) em todas as operações de cadastro e atualização.
+| ID   | Caso de Uso               | Ator Principal        | Descrição                                                                                                                                      |
+|------|---------------------------|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| CU01 | Cadastrar Colaborador     | Técnico de Segurança  | Inclui novos funcionários no sistema, registrando informações básicas e sua foto.                                                              |
+| CU02 | Gerenciar Colaborador     | Técnico de Segurança  | Permite a edição das informações ou a exclusão de um colaborador (com confirmação).                                                             |
+| CU03 | Cadastrar Equipamento     | Técnico de Segurança  | Registra novos tipos de EPIs (ex: Capacete, Luva de Raspa) no inventário.                                                                       |
+| CU04 | Gerenciar Equipamento     | Técnico de Segurança  | Permite a edição das informações ou a exclusão de um EPI do inventário.                                                                         |
+| CU05 | Realizar Controle de EPI  | Técnico de Segurança  | Registra a entrega de um EPI a um colaborador, definindo a data de empréstimo/fornecimento e a previsão de devolução.                           |
+| CU06 | Atualizar Status de EPI   | Técnico de Segurança  | Atualiza o status de um item emprestado para Devolvido, Danificado ou Perdido, registrando a data e observações.                                |
+| CU07 | Gerar Relatórios          | Técnico de Segurança  | Filtra e visualiza o histórico de empréstimos/fornecimentos por colaborador, equipamento e status.                                               |
 
-Exportar para as Planilhas
-Requisitos Não Funcionais (RNF)
-ID	Requisito Não Funcional	Descrição
-RNF01	Usabilidade	A interface do sistema deve ser intuitiva, utilizando a biblioteca Bootstrap para um design responsivo e moderno.
-RNF02	Segurança	O sistema deve garantir a integridade e consistência dos dados (Ex: Uso de chaves estrangeiras para relacionamentos).
-RNF03	Desempenho	As consultas de relatórios e a navegação entre telas devem ser rápidas e eficientes.
-RNF04	Plataforma	O sistema será desenvolvido em Python/Django, seguindo as diretrizes de instalação do projeto.
+## Requisitos do Sistema
+### Requisitos Funcionais (RF)
+| ID   | Requisito Funcional       | Descrição                                                                                                                                                  |
+|------|---------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| RF01 | Gestão de Colaboradores   | O sistema deve permitir o CRUD (Criação, Leitura, Atualização e Exclusão) de colaboradores.                                                                |
+| RF02 | Gestão de EPIs            | O sistema deve permitir o CRUD (Criação, Leitura, Atualização e Exclusão) de equipamentos de proteção individual.                                           |
+| RF03 | Controle de Empréstimo    | O sistema deve registrar a entrega de EPIs com data de empréstimo, previsão de devolução, status e chaves estrangeiras para Colaborador e Equipamento.      |
+| RF04 | Restrições de Status      | O sistema deve exibir apenas os status Emprestado e Fornecido no cadastro, e todos os status (Devolvido, Danificado, Perdido) na edição.                    |
+| RF05 | Campos Condicionais       | Os campos "Data da devolução" e "Observação na devolução" devem aparecer apenas na edição, ao selecionar os status Dev./Dan./Per.                          |
+| RF06 | Relatórios Detalhados     | O sistema deve gerar relatórios com filtros (tipo AND) por nome do colaborador, nome do equipamento e status.                                               |
+| RF07 | Restrição na Edição       | Na atualização de status, os campos Colaborador, Equipamento, Data do Empréstimo e Data Prevista da Devolução devem ser desabilitados (disabled).           |
+| RF08 | Feedback ao Usuário       | O sistema deve exibir mensagens de sucesso ou falha (utilizando Bootstrap) em todas as operações de cadastro e atualização.                                 |
 
-Exportar para as Planilhas
-Guia de Instalação e Execução
+
+### Requisitos Não Funcionais (RNF)
+| ID    | Requisito Não Funcional | Descrição                                                                                                 |
+|-------|--------------------------|-----------------------------------------------------------------------------------------------------------|
+| RNF01 | Usabilidade              | A interface do sistema deve ser intuitiva, utilizando a biblioteca Bootstrap para um design responsivo e moderno. |
+| RNF02 | Segurança                | O sistema deve garantir a integridade e consistência dos dados (Ex: Uso de chaves estrangeiras para relacionamentos). |
+| RNF03 | Desempenho               | As consultas de relatórios e a navegação entre telas devem ser rápidas e eficientes.                      |
+| RNF04 | Plataforma               | O sistema será desenvolvido em Python/Django, seguindo as diretrizes de instalação do projeto.             |
+
+## Guia de Instalação e Execução
 O sistema SGEPI foi desenvolvido utilizando o framework Django (Python).
-
-1. Pré-requisitos
+### 1. Pré-requisitos
 Certifique-se de ter o Python instalado em sua máquina.
-
-2. Clonagem do Repositório
+### 2. Clonagem do Repositório
 Abra o terminal e clone o projeto:
 
+```
 Bash
-
 git clone 'link-repositorio'
 cd nome-do-projeto
-3. Instalação das Dependências
+```
+
+### 3. Instalação das Dependências
 Instale o framework Django e o Pillow (necessário para o upload de fotos dos colaboradores):
 
+```
 Bash
-
 python -m pip install Django
 python -m pip install pillow
-(Opcional) Atualizar o pip:
+```
 
+### (Opcional) Atualizar o pip:
+
+```
 Bash
-
 python -m pip install --upgrade pip
-4. Configuração Inicial e Migrações
+```
+
+### 4. Configuração Inicial e Migrações
 Antes de rodar, é preciso aplicar as migrações iniciais do banco de dados:
 
+```
 Bash
-
 python .\manage.py makemigrations
 python .\manage.py migrate
-5. Execução do Servidor
+```
+
+### 5. Execução do Servidor
 Para iniciar o sistema, execute o servidor de desenvolvimento:
 
+```
 Bash
-
 python .\manage.py runserver
+```
 O sistema estará acessível em http://127.0.0.1:8000/.
 
-2. Estrutura de Codificação (Skeletons HTML/Django)
+# Estrutura de Codificação (Skeletons HTML/Django)
 Abaixo estão exemplos de como estruturar as telas usando Bootstrap, seguindo a lógica de backend do Django.
 
-2.1. Tela Base (Estrutura com Menu Lateral)
-Este base.html deve ser a estrutura principal, que será estendida pelas outras telas.
+## 2.1. Tela Base (Estrutura com Menu Lateral)
+Este ```base.html``` deve ser a estrutura principal, que será estendida pelas outras telas.
 
+```
 HTML
 
 <!DOCTYPE html>
@@ -126,7 +133,10 @@ HTML
     {% block scripts %}{% endblock %}
 </body>
 </html>
-2.2. Tela Cadastro de Colaboradores (Exemplo)
+```
+
+### 2.2. Tela Cadastro de Colaboradores (Exemplo)
+```
 HTML
 
 {% extends "base.html" %}
@@ -160,9 +170,10 @@ HTML
     </form>
 
 {% endblock %}
-2.3. Tela de Controle de EPI (Cadastro Inicial)
+```
+### 2.3. Tela de Controle de EPI (Cadastro Inicial)
 Esta tela deve conter apenas os status Emprestado e Fornecido.
-
+```
 HTML
 
 {% extends "base.html" %}
@@ -211,9 +222,10 @@ HTML
         <button type="submit" class="btn btn-primary">Registrar Entrega de EPI</button>
     </form>
 {% endblock %}
-2.4. Tela de Controle de EPI (Edição/Atualização de Status)
+```
+### 2.4. Tela de Controle de EPI (Edição/Atualização de Status)
 Esta é a tela de edição, onde os campos de identificação são desabilitados e os campos de devolução são exibidos condicionalmente.
-
+```
 HTML
 
 {% extends "base.html" %}
@@ -290,7 +302,9 @@ HTML
     });
 </script>
 {% endblock %}
-2.5. Tela de Relatórios (Com Filtro AND)
+```
+### 2.5. Tela de Relatórios (Com Filtro AND)
+```
 HTML
 
 {% extends "base.html" %}
@@ -366,12 +380,10 @@ HTML
     </table>
 
 {% endblock %}
-Próximos Passos:
+```
+### Próximos Passos:
 
-Modelo Django: Crie os modelos (Colaborador, Equipamento, ControleEPI) no models.py para as chaves estrangeiras.
-
-Views Django: Implemente as funções (views) para processar os formulários (POST) e renderizar as telas (GET), gerenciando o feedback (mensagens de sucesso/falha).
-
-URLs: Defina as rotas (URLs) que linkam o menu lateral com as views.
-
-Gravação e Slides: Prepare o slide, insira esta documentação e grave a tela mostrando a funcionalidade completa (Cadastro → Controle → Edição de Status → Relatórios).
+1. **Modelo Django:** Crie os modelos (```Colaborador```, ```Equipamento```, ```ControleEPI```) no ```models.py``` para as chaves estrangeiras.
+2. **Views Django:** Implemente as funções (views) para processar os formulários (```POST```) e renderizar as telas (```GET```), gerenciando o feedback (mensagens de sucesso/falha).
+3. **URLs:** Defina as rotas (URLs) que linkam o menu lateral com as views.
+4. **Gravação e Slides:** Prepare o slide, insira esta documentação e grave a tela mostrando a funcionalidade completa (Cadastro → Controle → Edição de Status → Relatórios).
