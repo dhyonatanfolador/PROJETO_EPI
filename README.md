@@ -63,7 +63,6 @@ graph TD;
     Salvar --> Fim;
     Colaborador --> Editar;
     Editar --> Salvar;
-    Salvar --> Fim;
     Colaborador --> Deletar;
     Deletar --> Fim;
 ```
@@ -78,7 +77,6 @@ graph TD;
     Salvar --> Fim;
     Equipamento --> Editar;
     Editar --> Salvar;
-    Salvar --> Fim;
     Equipamento --> Deletar;
     Deletar --> Fim;
 ```
@@ -93,7 +91,6 @@ graph TD;
     Salvar --> Fim;
     Emprestimo --> Editar;
     Editar --> Salvar;
-    Salvar --> Fim;
 ```
 
 Diagrama de relatório:
