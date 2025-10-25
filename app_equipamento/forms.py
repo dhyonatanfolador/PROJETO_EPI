@@ -7,6 +7,6 @@ class EquipamentoForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'ca': forms.TextInput(attrs={'class': 'form-control'}),
-            'descricao': forms.TextInput(attrs={'class': 'form-control'}),
+            'nome': forms.TextInput(attrs={'class': 'form-control'}),
             'quantidade': forms.NumberInput(attrs={'class': 'form-control'}),
         }

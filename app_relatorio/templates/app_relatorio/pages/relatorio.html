@@ -1,0 +1,340 @@
+{% extends "global/index.html" %}
+{% load static %}
+
+{% block title %}Relatório de Empréstimos{% endblock title %}
+
+{% block header %}
+    {% include 'global/partials/header.html' %}
+{% endblock header %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h1 class="display-5 text-primary mb-4">Relatório de Empréstimos</h1>
+
+    <!-- Filtros -->
+    <form method="get" class="row g-3 mb-4">
+        <!-- Colaborador com botão de busca -->
+        <div class="col-md-5">
+            <label class="form-label">Colaborador</label>
+            <div class="input-group">
+                <input type="text" id="colaborador-nome" class="form-control" name="colaborador_nome" placeholder="Digite o nome do colaborador...">
+                <input type="hidden" name="colaborador" id="colaborador-id" value="{{ request.GET.colaborador }}">
+                <button type="button" id="btn-buscar-colaborador" class="btn btn-outline-secondary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Equipamento com botão de busca -->
+        <div class="col-md-5">
+            <label class="form-label">Equipamento</label>
+            <div class="input-group">
+                <input type="text" id="equipamento-nome" class="form-control" name="equipamento_nome" placeholder="Digite o nome do equipamento...">
+                <input type="hidden" name="equipamento" id="equipamento-id" value="{{ request.GET.equipamento }}">
+                <button type="button" id="btn-buscar-equipamento" class="btn btn-outline-secondary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Status -->
+        <div class="col-md-5">
+            <label for="status" class="form-label">Status do Empréstimo</label>
+            <select name="status" id="status" class="form-select">
+                <option value="">Todos</option>
+                {% for key, label in status_choices %}
+                    <option value="{{ key }}" {% if request.GET.status == key %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+        </div>
+    </form>
+
+    <!-- Modal: Lista de Equipamentos -->
+    <div class="modal fade" id="modalEquipamentos" tabindex="-1" aria-labelledby="modalEquipamentosLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalEquipamentosLabel">Selecionar Equipamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Barra de Pesquisa -->
+                    <form method="get" class="mb-3 d-flex" role="search" action=".">
+                        <input type="text" name="q_equipamento" value="{{ request.GET.q_equipamento }}" class="form-control me-2" placeholder="Pesquisar por nome...">
+                        <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                    </form>
+
+                    <table class="table table-hover" id="tabela-equipamentos">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>CA</th>
+                                <th>Nome</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for equipamento in equipamentos %}
+                                <tr>
+                                    <td>{{ equipamento.id }}</td>
+                                    <td>{{ equipamento.ca }}</td>
+                                    <td>{{ equipamento.nome }}</td>
+                                    <td>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-primary btn-selecionar"
+                                                data-id="{{ equipamento.id }}"
+                                                data-nome="{{ equipamento.nome }}">
+                                            Selecionar
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Lista de Colaboradores -->
+    <div class="modal fade" id="modalColaboradores" tabindex="-1" aria-labelledby="modalColaboradoresLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalColaboradoresLabel">Selecionar Colaborador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Barra de Pesquisa -->
+                    <form method="get" class="mb-3 d-flex" role="search" action=".">
+                        <input type="text" name="q_colaborador" value="{{ request.GET.q_colaborador }}" class="form-control me-2" placeholder="Pesquisar por nome...">
+                        <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                    </form>
+                    <table class="table table-hover" id="tabela-colaboradores">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for colaborador in colaboradores %}
+                                <tr>
+                                    <td>{{ colaborador.id }}</td>
+                                    <td>{{ colaborador.nome }}</td>
+                                    <td>{{ colaborador.email }}</td>
+                                    <td>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-primary btn-selecionar"
+                                                data-id="{{ colaborador.id }}"
+                                                data-nome="{{ colaborador.nome }}">
+                                            Selecionar
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if emprestimos %}
+    <!-- Botão de Imprimir -->
+    <div class="d-flex justify-content-end mb-3">
+        <button id="btn-imprimir" class="btn btn-outline-secondary">
+            <i class="fas fa-print"></i> Imprimir
+        </button>
+    </div>
+
+    <!-- Tabela de Empréstimos -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Colaborador</th>
+                    <th>Data do Empréstimo</th>
+                    <th>Data de Devolução</th>
+                    <th>Status</th>
+                    <!-- Adicione mais colunas se desejar -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for emprestimo in emprestimos %}
+                    <tr>
+                        <td>{{ emprestimo.id }}</td>
+                        <td>{{ emprestimo.id_colaborador }}</td>
+                        <td>{{ emprestimo.data_entrega|date:"d/m/Y" }}</td>
+                        <td>{{ emprestimo.data_devolucao|date:"d/m/Y" }}</td>
+                        <td>{{ emprestimo.get_status_display }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <div class="alert alert-info mt-4">
+            Nenhum empréstimo encontrado com os filtros selecionados.
+        </div>
+    {% endif %}
+
+    <!-- Modal para pré-visualização PDF -->
+    <div class="modal fade" id="modalPreviewPdf" tabindex="-1" aria-labelledby="modalPreviewPdfLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" style="max-width: 90vw;">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalPreviewPdfLabel">Pré-visualização do PDF</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body" style="height: 80vh;">
+            <iframe id="iframePdfPreview" src="" frameborder="0" style="width:100%; height:100%;"></iframe>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Colaborador Elements
+        const inputColaboradorId = document.getElementById('colaborador-id');
+        const inputColaboradorNome = document.getElementById('colaborador-nome');
+        const modalColaboradoresEl = document.getElementById('modalColaboradores');
+        const btnBuscarColaborador = document.getElementById('btn-buscar-colaborador');
+        const formBuscaColaborador = modalColaboradoresEl.querySelector('form');
+
+        // Equipamento Elements
+        const inputEquipamentoId = document.getElementById('equipamento-id');
+        const inputEquipamentoNome = document.getElementById('equipamento-nome');
+        const modalEquipamentosEl = document.getElementById('modalEquipamentos');
+        const btnBuscarEquipamento = document.getElementById('btn-buscar-equipamento');
+        const formBuscaEquipamento = modalEquipamentosEl.querySelector('form');
+
+        // Função para configurar botão selecionar dentro dos modais
+        function configurarSelecionarBtns(modalEl, inputId, inputNome) {
+            modalEl.querySelectorAll('.btn-selecionar').forEach(button => {
+                button.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+                    const nome = this.getAttribute('data-nome');
+
+                    inputId.value = id;
+                    inputNome.value = nome;
+
+                    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                    modal.hide();
+                });
+            });
+        }
+
+        // Configura para colaboradores
+        configurarSelecionarBtns(modalColaboradoresEl, inputColaboradorId, inputColaboradorNome);
+
+        // Configura para equipamentos
+        configurarSelecionarBtns(modalEquipamentosEl, inputEquipamentoId, inputEquipamentoNome);
+
+        // Ação do botão de busca do colaborador
+        btnBuscarColaborador.addEventListener('click', function () {
+            const nome = inputColaboradorNome.value.trim();
+            if (nome) {
+                const query = encodeURIComponent(nome);
+                // Passa a query como q_colaborador para diferenciar da busca equipamento
+                const url = `?q_colaborador=${query}`;
+                window.location.href = url;
+            } else {
+                const modal = new bootstrap.Modal(modalColaboradoresEl);
+                modal.show();
+            }
+        });
+
+        // Ação do botão de busca do equipamento
+        btnBuscarEquipamento.addEventListener('click', function () {
+            const nome = inputEquipamentoNome.value.trim();
+            if (nome) {
+                const query = encodeURIComponent(nome);
+                // Passa a query como q_equipamento
+                const url = `?q_equipamento=${query}`;
+                window.location.href = url;
+            } else {
+                const modal = new bootstrap.Modal(modalEquipamentosEl);
+                modal.show();
+            }
+        });
+
+        // Enter no campo colaborador dispara busca
+        inputColaboradorNome.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                btnBuscarColaborador.click();
+            }
+        });
+
+        // Enter no campo equipamento dispara busca
+        inputEquipamentoNome.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                btnBuscarEquipamento.click();
+            }
+        });
+
+        // Impede Enter nos inputs de busca internos dos modais recarregar a página
+        formBuscaColaborador.querySelector('input[name="q_colaborador"]').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+            }
+        });
+        formBuscaEquipamento.querySelector('input[name="q_equipamento"]').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+            }
+        });
+
+        // Reabre o modal correspondente ao parâmetro de busca na URL
+        const searchParams = new URLSearchParams(window.location.search);
+        if (searchParams.has('q_colaborador')) {
+            const modal = new bootstrap.Modal(modalColaboradoresEl);
+            modal.show();
+        }
+        if (searchParams.has('q_equipamento')) {
+            const modal = new bootstrap.Modal(modalEquipamentosEl);
+            modal.show();
+        }
+
+        //Pré-visualização do relatório
+        const btnImprimir = document.getElementById('btn-imprimir');
+        const iframe = document.getElementById('iframePdfPreview');
+        const modalEla = document.getElementById('modalPreviewPdf');
+
+        btnImprimir.addEventListener('click', async function () {
+            const urlPdf = "{{ request.scheme }}://{{ request.get_host }}{% url 'relatorio-pdf' %}" + window.location.search;
+            console.log('Tentando buscar PDF em:', urlPdf);
+
+            try {
+                const resp = await fetch(urlPdf, { method: 'GET', credentials: 'same-origin' });
+                if (!resp.ok) {
+                    throw new Error('HTTP ' + resp.status);
+                }
+                const blob = await resp.blob();
+                const blobUrl = URL.createObjectURL(blob);
+                iframe.src = blobUrl;
+
+                const modal = new bootstrap.Modal(modalEla);
+                modal.show();
+            } catch (err) {
+                console.error('Erro ao buscar PDF:', err);
+                alert('Não foi possível carregar o PDF: ' + err.message);
+            }
+        });
+    });
+</script>
+{% endblock content %}

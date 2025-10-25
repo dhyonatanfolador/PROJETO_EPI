@@ -1,7 +1,7 @@
 from django.urls import path
-from app_relatorio.views import Relatorio
+from .views import relatorio_emprestimos_view, GerarPdfView
 
-# Add your views here.
 urlpatterns = [
-    path("relatorio/", Relatorio),
+    path('relatorio/', relatorio_emprestimos_view, name='relatorio-emprestimos'),
+    path('relatorio/pdf/', GerarPdfView.as_view(), name='relatorio-pdf'),
 ]
